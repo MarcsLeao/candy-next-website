@@ -21,7 +21,7 @@ export function SideMenu({selectedMenuOption}: {selectedMenuOption: string}) {
 
     return (
         <div>
-            <DialogModal open={openModal} setOpen={setOpenModal} title="Warning" text="Sorry! this funcion is not avalibe yet."/>
+            <DialogModal open={openModal} setOpen={setOpenModal} title="Warning" text="Sorry! This function is not available yet."/>
             <div className="flex flex-col h-full justify-between w-[70px] sm:w-[240px] border-r p-4">
                 <ul className="flex flex-col gap-3">
                     <li className={`px-3 py-2 rounded-lg border hover:border-gray-400 transition-colors ${selected === 'dashboard' ? ' dashboardSelectedItem' : ''}`}>
