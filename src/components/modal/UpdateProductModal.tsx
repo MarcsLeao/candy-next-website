@@ -33,6 +33,7 @@ export default function UpdateProductModal({open, setOpen, productData}: {open: 
     const queryClient = useQueryClient()
     const [isSucessModalOpen, setIsSucessModalOpen] = useState<boolean>(false)
     const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false)
+    const [isNoChangesModalOpen, setIsNoChangesModalOpen] = useState<boolean>(false)
     const {mutate} = useUpdateProductMutation()
     const {register, handleSubmit, formState: {errors}, setValue, reset} = useForm({
         resolver: zodResolver(productUpdateMutationSchema), defaultValues: {...productData}
@@ -48,7 +49,7 @@ export default function UpdateProductModal({open, setOpen, productData}: {open: 
     }
 
     const handleUpdate = (data: ProductQuerryData) => {
-        if(productData.name === data.name && productData.price === data.price && productData.cost_price === data.cost_price && productData.stock === data.stock) return alert('nothing changed')
+        if(productData.name === data.name && productData.price === data.price && productData.cost_price === data.cost_price && productData.stock === data.stock) return setIsNoChangesModalOpen(true)
 
         queryClient.setQueryData(['Products'], (oldData: ProductQuerryData[]) => {
             if (!oldData) return
@@ -68,6 +69,7 @@ export default function UpdateProductModal({open, setOpen, productData}: {open: 
         <Modal open={open} onClose={handleClose}>
             <Box sx={style}>
                 <DialogModal open={isSucessModalOpen} setOpen={setIsSucessModalOpen} title='Success' text='Data successfully updated.'/>
+                <DialogModal open={isNoChangesModalOpen} setOpen={setIsNoChangesModalOpen} title='Warning' text='No changes were made. Update failed.'/>
                 <DialogModal open={isErrorModalOpen} setOpen={setIsErrorModalOpen} title='Error' text='Failed to update data.'/>
                 <div className="flex flex-col w-full h-full py-5 px-7 bg-white">
                     <div className="flex justify-between items-start gap-2">
