@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+}
+
+body {
+  color: black;
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+
+  input[type="number"] {
+    outline: none;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  };
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .shadow-custom {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none; 
+    scrollbar-width: none;  
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.check:checked ~ .switch .slider {
+  transform: translateX(27px);
+}
+
+.dashboardSelectedItem a{
+  color: #09090b;
+}
+
+.dashboardSelectedItem {
+  border-color: #09090b;
+}
+
+.InterfaceMenuSelectedItem {
+  border-color: #09090b;
+}

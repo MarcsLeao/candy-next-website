@@ -1,0 +1,15 @@
+export const UpdateOrderModalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '95%',
+    maxWidth: '1600px',
+    height: '80vh',
+    maxHeight: '95vh',
+    boxShadow: 24,
+    borderRadius: '0.5rem',
+    overflowY: 'auto',
+    outline: 'none',
+    backgroundColor: 'white',
+  }
