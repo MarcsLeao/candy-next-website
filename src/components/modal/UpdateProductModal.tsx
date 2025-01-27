@@ -11,7 +11,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { productUpdateMutationSchema } from '@/src/utils/validations';
 import { useQueryClient } from '@tanstack/react-query';
 import { CloseButton } from '../button/return-button';
-import { DialogModal } from './DialogModal';
+import { DialogModal, DialogModalConfirm } from './DialogModal';
+import LoadingSpinner from '../loading/LoadingSpinner';
 
 const style = {
     position: 'absolute',
@@ -34,7 +35,7 @@ export default function UpdateProductModal({open, setOpen, productData}: {open: 
     const [isSucessModalOpen, setIsSucessModalOpen] = useState<boolean>(false)
     const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false)
     const [isNoChangesModalOpen, setIsNoChangesModalOpen] = useState<boolean>(false)
-    const {mutate} = useUpdateProductMutation()
+    const {mutate, isPending} = useUpdateProductMutation()
     const {register, handleSubmit, formState: {errors}, setValue, reset} = useForm({
         resolver: zodResolver(productUpdateMutationSchema), defaultValues: {...productData}
     })
@@ -45,6 +46,7 @@ export default function UpdateProductModal({open, setOpen, productData}: {open: 
     
     const handleClose = () => {
         reset()
+        setIsSucessModalOpen(false)
         setOpen(false)
     }
 
@@ -59,7 +61,6 @@ export default function UpdateProductModal({open, setOpen, productData}: {open: 
         mutate(data , {
             onSuccess: () => {
                 setIsSucessModalOpen(true)
-                handleClose()
             },
             onError: () => setIsErrorModalOpen(true)
         })
@@ -68,8 +69,9 @@ export default function UpdateProductModal({open, setOpen, productData}: {open: 
     return (
         <Modal open={open} onClose={handleClose}>
             <Box sx={style}>
-                <DialogModal open={isSucessModalOpen} setOpen={setIsSucessModalOpen} title='Success' text='Data successfully updated.'/>
-                <DialogModal open={isNoChangesModalOpen} setOpen={setIsNoChangesModalOpen} title='Warning' text='No changes were made. Update failed.'/>
+                {isPending ? <LoadingSpinner/> : null}
+                <DialogModalConfirm open={isSucessModalOpen} setOpen={setIsSucessModalOpen} title='Success' text='Data successfully updated.' actionFn={handleClose}/>
+                <DialogModal open={isNoChangesModalOpen} setOpen={setIsNoChangesModalOpen} title='Warning' text='Make some changes before submitting. Update failed.'/>
                 <DialogModal open={isErrorModalOpen} setOpen={setIsErrorModalOpen} title='Error' text='Failed to update data.'/>
                 <div className="flex flex-col w-full h-full py-5 px-7 bg-white">
                     <div className="flex justify-between items-start gap-2">
